@@ -1,38 +1,40 @@
 from collections import deque
 import sys
 
-class graph():
-    def __init__(self):
-        self.list = {}
-        
-    def add_edge(self, a, b):
-        if a not in self.list:
-            self.list[a] = []
-        self.list[a].append(b)
-        if b not in self.list:
-            self.list[b] = []
-        self.list[b].append(a)
-        
-    def dfs(self, start, vis=set()):
-        vis.add(start)
-        print(start, end=' ')
-        
-        if start in self.list:
-            for n in self.list[start]:
-                if n not in vis:
-                    
     
-    def bfs(self, start, vis=set()):
-        
+def add_edge(a, b):
+    graph[a][b] = True
+    graph[b][a] = True
 
 
+def dfs(start, vis=set()):
+    vis.add(start)
+    print(start, end=' ')
+    for n in range(N+1):
+        if n not in vis and graph[start][n]:
+            dfs(n,vis)
 
-
+def bfs(start, vis=set()):
+    queue = deque()
+    queue.append(start)
+    while queue:
+        start = queue.popleft()
+        print(start, end=' ')
+        vis.add(start)
+        for n in range(N+1):
+            if n not in vis and graph[start][n]:
+                vis.add(n)
+                queue.append(n)
 
 
 input = sys.stdin.readline
 N, M, V = map(int,input().split())
-
+graph = [[False]*(N+1) for _ in range(N+1)]
 
 for i in range(M):
-    add
+    a,b = map(int,input().split())
+    add_edge(a, b)
+
+dfs(V)
+print()
+bfs(V)
