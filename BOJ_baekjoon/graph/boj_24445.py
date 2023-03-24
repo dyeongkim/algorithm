@@ -12,7 +12,7 @@ def bfs(start) :
 
     while queue:
         x = queue.popleft()
-        graph[x].sort()
+        graph[x].sort(reverse=True)
         
         for i in graph[x]:
             if not vis[i] :
