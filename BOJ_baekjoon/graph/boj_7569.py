@@ -2,7 +2,7 @@ import sys
 from collections import deque
 input = sys.stdin.readline
 
-def bfs(z, y, x) :
+def bfs() :
     while queue :
         z, y, x = queue.popleft()
 
@@ -41,8 +41,7 @@ for i in range(H):
                 queue.append((i,j,k))
     graph.append(temp)
 
-z, y, x = queue.popleft()
-bfs(z,y,x)
+bfs()
 
 result = []
 
