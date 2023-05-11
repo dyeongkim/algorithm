@@ -14,3 +14,4 @@ for i in range(1,10001):
 for i in range(1,10001):
     if result[i]:
         print(i)
+ 
