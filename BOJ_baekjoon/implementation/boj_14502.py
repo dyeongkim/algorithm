@@ -35,16 +35,16 @@ def safe_cnt(temp_graph):
         max_safe = s_cnt
 
 # 벽 세우는 함수
-def wall(count):
+def wall(start, count):
     if count == 3: # 3개가 다 세워졌으면 BFS로 바이러스 퍼트리기
         bfs()
         return
-    for x in range(N):
-        for y in range(M):
-            if graph[x][y] == 0: # 빈공간 만나면 벽 세우기
-                graph[x][y] = 1 
-                wall(count+1) # 현재 벽 개수 추가해서 재귀
-                graph[x][y] = 0 # 다시 벽 초기화
+    for i in range(start, len(empty_list)):
+        x,y = empty_list[i]
+        if graph[x][y] == 0: # 빈공간 만나면 벽 세우기
+            graph[x][y] = 1 
+            wall(i+1, count+1) # 현재 벽 개수 추가해서 재귀
+            graph[x][y] = 0 # 다시 벽 초기화
 
 
 input = sys.stdin.readline
@@ -53,6 +53,7 @@ dx,dy = [0,1,0,-1],[1,0,-1,0]
 
 graph = [] # 연구소 지도
 v_list = [] # 바이러스 위치 리스트
+empty_list = [] # 빈공간 위치 리스트
 max_safe = 0
 
 for i in range(N): # 지도 입력받기
@@ -61,7 +62,9 @@ for i in range(N): # 지도 입력받기
     for j in range(M):
         if graph[i][j] == 2 : # 바이러스 위치 저장
             v_list.append((i,j))
+        elif graph[i][j] == 0 : # 빈공간 위치 저장
+            empty_list.append((i,j))
 
-wall(0) # 벽세우기 시작
+wall(0, 0) # 벽세우기 시작
 
 print(max_safe)
