@@ -1,31 +1,44 @@
 # 백준 15686 - 치킨 배달
 import sys
+import copy
 from collections import deque
 
 def c_make(st, count):
-    if st == M:
-        bfs()
+    if count == M:
+        g = copy.deepcopy(temp_graph)
+        print(g)
+        bfs(g)
+        return
     for i in range(st, len(c_list)):
-        temp_c_list.append(c_list[i])
-        c_make(st+1, count+1)
-        temp_c_list.pop(st)
+        x,y = c_list[i]
+        graph[x][y] = -1
+        c_make(i+1, count+1)
+        graph[x][y] = 0
 
 
-def bfs():
+def bfs(g):
+    global result
     while queue:
-        x, y = queue.popleft()
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if nx < 0 or nx >= N or ny < 0 or ny >= N :
-                continue
-            if temp_graph[nx][ny] != 0 or graph[nx][ny] == 1:
-                continue
-            print(temp_graph)
-            temp_graph[nx][ny] += temp_graph[x][y] + 1
-            queue.append((nx,ny))
-    c_cnt(temp_graph)
+        h_queue = deque()
+        h_queue.append(queue.popleft())
+        while h_queue :
+            x,y = h_queue.popleft()
+            for i in range(4):
+                nx = x + dx[i]
+                ny = y + dy[i]
+                if nx < 0 or nx >= N or ny < 0 or ny >= N :
+                    continue
+                if g[nx][ny] != 0 or graph[nx][ny] == 1:
+                    continue
+                if graph[nx][ny] == -1 :
+                    result += g[x][y] + 1
+                    break
+                g[nx][ny] += g[x][y] + 1
+                queue.append((nx,ny))
+    # c_cnt(temp_graph)
+    
 
+'''
 def c_cnt(g):
     global result
     temp = 0
@@ -33,6 +46,7 @@ def c_cnt(g):
         temp += g[x][y]
     if result > temp :
         result = temp
+'''
 
 input = sys.stdin.readline
 
@@ -42,7 +56,7 @@ temp_graph = [[0]*N for _ in range(N)]
 queue = deque()
 c_list = []
 temp_c_list = []
-result = 2*N
+result = 0
 
 dx, dy = [0, -1, 0, 1],[-1, 0, 1, 0]
 
