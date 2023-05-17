@@ -4,16 +4,15 @@ import copy
 from collections import deque
 
 def c_make(st, count):
-    if count == M:
+    if len(c_list)-count == M:
         g = copy.deepcopy(temp_graph)
-        print(g)
         bfs(g)
         return
     for i in range(st, len(c_list)):
         x,y = c_list[i]
-        graph[x][y] = -1
-        c_make(i+1, count+1)
         graph[x][y] = 0
+        c_make(i+1, count+1)
+        graph[x][y] = 2
 
 
 def bfs(g):
@@ -30,7 +29,8 @@ def bfs(g):
                     continue
                 if g[nx][ny] != 0 or graph[nx][ny] == 1:
                     continue
-                if graph[nx][ny] == -1 :
+                print(g, graph)
+                if graph[nx][ny] == 2 :
                     result += g[x][y] + 1
                     break
                 g[nx][ny] += g[x][y] + 1
