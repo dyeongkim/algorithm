@@ -15,7 +15,7 @@ for i in range(M):
         else :
             result = set()
     else :
-        S, N = temp[0],temp[1]
+        S, N = temp[0],int(temp[1])
         if S == 'add' :
             if N not in result :
                 result.add(N)
