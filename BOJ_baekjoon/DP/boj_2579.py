@@ -21,3 +21,21 @@ for i in range(3,T+1):
 print(max(dp[T][1],dp[T][2]))
 '''
 
+T = int(input())
+st = [0] * (T+1)
+tot = 0
+for i in range(1, T+1):
+    st[i] = int(input())
+    tot += st[i]
+dp = [0] * (T+1)
+
+if T <= 2 :
+    print(tot)
+    exit()
+
+dp[1] = st[1]
+dp[2] = st[2]
+dp[3] = st[3]
+for i in range(4, T) :
+    dp[i] = min(dp[i-2], dp[i-3]) + st[i]
+print(tot-min(dp[T-1], dp[T-2]))
