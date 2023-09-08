@@ -20,20 +20,19 @@
 암호가 잘못되어 암호를 해석할 수 없는 경우에는 0을 출력한다.
 '''
 
-pw = input()
+pw = list(map(int,input()))
 size = len(pw)
 dp = [0]*(size+1)
 
-if pw[0] == '0' :
+if pw[0] == 0 :
     print(0)
 else :
+    pw = [0] + pw
     dp[0] = dp[1] = 1
-
-    for i in range(2, size):
-        if int(pw[i]) > 0 :
+    for i in range(2, size+1):
+        if pw[i] > 0 :
             dp[i] += dp[i-1]
-        temp = pw[i-1] + pw[i]
-        if 10 <= int(temp) <= 26 :
+        temp = pw[i-1]*10 + pw[i]
+        if 10 <= temp <= 26 :
             dp[i] += dp[i-2]
-        
-    print(dp[size-1] % 1000000)
+    print(dp[size] % 1000000)
