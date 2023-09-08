@@ -22,18 +22,18 @@
 
 pw = input()
 size = len(pw)
-dp = [0]*(size)
+dp = [0]*(size+1)
 
 if pw[0] == '0' :
     print(0)
 else :
-    dp[0] = 1
+    dp[0] = dp[1] = 1
 
-    for i in range(1, size):
+    for i in range(2, size):
         if int(pw[i]) > 0 :
             dp[i] += dp[i-1]
         temp = pw[i-1] + pw[i]
-        if int(temp) <= 26 :
-            dp[i] += 1
+        if 10 <= int(temp) <= 26 :
+            dp[i] += dp[i-2]
         
-    print(dp[len(pw)-1])
+    print(dp[size-1] % 1000000)
