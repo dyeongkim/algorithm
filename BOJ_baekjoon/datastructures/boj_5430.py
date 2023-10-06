@@ -8,26 +8,30 @@ T = int(input())
 for _ in range(T):
     S = input().rstrip()
     n = int(input())
-    x = input().rstrip().replace("[","").replace("]","").split(",")
-    result = deque()
-    for i in x :
-        if i =="":
-            continue
-        else :
-            result.append(int(i))
+    x = input().rstrip()
+    if n == 0 :
+        result = deque()
+    else :
+        x = x[1:-1].split(",")
+        result = deque(x)
     
+    cnt_r = 0
     st = True
-
     for i in S :
         if i == "R" :
-            result.reverse()
+            cnt_r += 1
         elif i == "D" :
             if len(result) > 0 :
-                result.popleft()
+                if cnt_r % 2 != 0:
+                    result.pop()
+                else :
+                    result.popleft()
             else :
                 st = False
                 break
+    if cnt_r % 2 != 0:
+        result.reverse()
     if st :
-        print(list(result))
+        print("[" + ",".join(result) + "]")
     else :
         print("error")
