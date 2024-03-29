@@ -12,14 +12,6 @@
 
 # 출력
 각 테스트 케이스 마다, 2n개의 스티커 중에서 두 변을 공유하지 않는 스티커 점수의 최댓값을 출력한다.
-
-2
-5
-50 10 100 20 40
-30 50 70 10 60
-7
-10 30 10 50 100 20 40
-20 40 30 50 60 20 80
 '''
 
 import sys
@@ -28,9 +20,11 @@ input = sys.stdin.readline
 
 T = int(input())
 for _ in range(T) :
-    dp = [0] * (T+1)
     N = int(input())
+    dp = [[0, 0] for _ in range(N + 1)]
     sticker = [list(map(int, input().split())) for _ in range(2)]
+    for i in range(1, N+1):
+        dp[i][0] = max(dp[i-1][0], dp[i-1][1]+sticker[0][i-1])
+        dp[i][1] = max(dp[i-1][1], dp[i-1][0]+sticker[1][i-1])
 
-    for i in range(N+1):
-        dp[i] = max(dp[i-1])
+    print(max(dp[-1]))
